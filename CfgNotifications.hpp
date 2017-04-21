@@ -1,10 +1,10 @@
-class tf47_core_base 
+class tf47_core_base
     {
         title = "";
-		iconPicture = ""; 
+		iconPicture = "";
 		iconText = "";
 		description = "%1";
-		color[] = {1,1,1,1}; 
+		color[] = {1,1,1,1};
 		duration = 5;
 		priority = 0;
 		difficulty[] = {};
@@ -19,8 +19,8 @@ class tf47_core_base
 		title = "Whitelist korrekt";
 		iconPicture = "TF47CoreScripts\data\tankSuccess.paa";
 	};
-    
-    
+
+
     	class whitelist
 	{
 		title = "Whitelist failed"; // Tile displayed as text on black background. Filled by arguments.
