@@ -1,6 +1,6 @@
 class tf47_core_base
-    {
-        title = "";
+{
+    title = "";
 		iconPicture = "";
 		iconText = "";
 		description = "%1";
@@ -8,18 +8,23 @@ class tf47_core_base
 		duration = 5;
 		priority = 0;
 		difficulty[] = {};
-    }
-    class tf47_core_tankFail : tf47_core_base
-	{
+}
+class tf47_core_tankFail : tf47_core_base
+{
 		title = "Whitelist Fehler";
 		iconPicture = "TF47CoreScripts\data\tankFail.paa";
-	};
-    class tf47_core_tankSuccess : tf47_core_base
-	{
+};
+class tf47_core_tankSuccess : tf47_core_base
+{
 		title = "Whitelist korrekt";
 		iconPicture = "TF47CoreScripts\data\tankSuccess.paa";
-	};
-
+};
+class tf47_core_ticketLoss : tf47_core_base
+{
+  title = "Ticket Verlust";
+  iconPicture = "TF47CoreScripts\data\ticketLoss.paa";
+  description = "%1";
+};
 
     	class whitelist
 	{

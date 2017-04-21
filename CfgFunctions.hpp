@@ -20,3 +20,12 @@ class tf47_core_whitelist
         class checkSlotWhitelist {};
     };
 };
+
+class tf47_core_ticketsystem
+{
+    class tf47_core_ticketsystem
+    {
+        file = "TF47CoreScripts\functions\ticketsystem";
+        class registerVehicle {};
+    };
+};

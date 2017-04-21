@@ -28,3 +28,15 @@
 
 #define TICKETSYSTEM_DETECTION_MODE(STATE) tf47_core_ticketSystemDetectionMode\
     = STATE; publicVariable "tf47_core_ticketSystemDetectionMode";
+
+#define REGISTER_DEFAULT(TICKETS) tf47_coreticketSystemDefaultTickets\
+    = TICKETS; publicVariable "tf47_coreticketSystemDefaultTickets";
+
+#define REGISTER_TICKETCOST(SLOTNAME, COST) [SLOTNAME, COST],
+
+#define REGISTER_SLOT_TICKETCOST_BEGIN tf47_core_ticketSystemSlotCost = [
+#define REGISTER_SLOT_TICKETCOST_END [objNull, 0]];\
+    publicVariable "tf47_core_ticketSystemSlotCost";
+
+#define REGISTER_VEHICLE_TICKETCOST(VEHICLE, COST) [VEHICLE, COST] call\
+    tf47_core_ticketsystem_fnc_registerVehicle;
