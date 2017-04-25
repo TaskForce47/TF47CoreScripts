@@ -29,6 +29,10 @@
 #define TICKETSYSTEM_DETECTION_MODE(STATE) tf47_core_ticketSystemDetectionMode\
     = STATE; publicVariable "tf47_core_ticketSystemDetectionMode";
 
+#define TICKETSYSTEM_MARKER_TRACKING_DELAY(DELAY)
+    tf47_core_ticketsystem_trackingMarkerUpdate = DELAY; publicVariable
+    "tf47_core_ticketsystem_trackingMarkerUpdate";
+
 #define TICKETSYSTEM_TICKETS_START(COUNT) tf47_core_ticketsystem_tickets\
     = COUNT; publicVariable "tf47_core_ticketsystem_tickets";
 #define TICKETSYSTEM_SOFTCAP(COUNT) tf47_core_ticketsystem_softcap\

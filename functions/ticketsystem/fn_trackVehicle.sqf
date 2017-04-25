@@ -8,20 +8,18 @@ if(isNull _vehicle) exitWith {
     hint "params";
 };
 
-_markerSide = switch (_side) do {
-    case (west): {
-        "b_"
-    };
-    case (east): {
-        "o_"
-    };
-    case (resistance): {
-        "n_"
-    };
-};
+_markerType = [_vehicle, _side] call tf47_core_util_fnc_getMarkerType;
 
-_configPath = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
+_vehiclePos = getPos _vehicle;
 
-if(getNumber(_configPath >> "attendant") == 1) exitWith {
-    format["%1med", _markerSide];
+_marker = createMarker [format["tf47_core_ticketsystem_trackingMarker_%1",
+    str _vehicle],[_vehicle select 0, _vehicle select 1]];
+_marker setMarkerShape "ICON";
+_marker setMarkerType _markerType;
+
+_trackingHandle = [_vehicle_, _markerType] spawn {
+    sleep tf47_core_ticketsystem_trackingMarkerUpdate;
+    _marker setMarkerPos
+        [(getPos _vehicle) select 0, (getPos _vehicle) select 1];
+    // TODO: change alpha on killed or desertion
 };
