@@ -1,6 +1,9 @@
 _result = _this params [
     ["_object", objNull, [objNull]],
-    ["_cost", 0, [0]]
+    ["_amount", 0, [0]],
+    ["_action", 0, [0]],
+    ["_positiveChange", false, [false]],
+    ["_customText", "", [""]]
 ];
 
 if(!isServer) exitWith { hint "server"; };

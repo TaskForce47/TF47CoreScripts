@@ -23,12 +23,11 @@ _trackingHandle = [_vehicle_, _marker] spawn {
         sleep tf47_core_ticketsystem_trackingMarkerUpdate;
         _marker setMarkerPos
             [(getPos _vehicle) select 0, (getPos _vehicle) select 1];
-        // TODO: kill script when not needed anymore
         if((damage _vehicle) == 1 || (_vehicle getVariable
                 ["tf47_core_ticketsystem_isDeserted", false])) then {
             _marker setMarkerAlpha 0.3;
         };
-        _keepTracking = !((damage _vehicle) == 1);
+        _keepTracking = ((damage _vehicle) != 1);
     };
     deleteMarker _marker;
 };
