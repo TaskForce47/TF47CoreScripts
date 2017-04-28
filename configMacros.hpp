@@ -29,9 +29,8 @@
 #define TICKETSYSTEM_DETECTION_MODE(STATE) tf47_core_ticketSystemDetectionMode\
     = STATE; publicVariable "tf47_core_ticketSystemDetectionMode";
 
-#define TICKETSYSTEM_MARKER_TRACKING_DELAY(DELAY)
-    tf47_core_ticketsystem_trackingMarkerUpdate = DELAY; publicVariable
-    "tf47_core_ticketsystem_trackingMarkerUpdate";
+#define TICKETSYSTEM_MARKER_TRACKING_DELAY(DELAY) tf47_core_ticketsystem_trackingMarkerUpdate\
+    = DELAY; publicVariable "tf47_core_ticketsystem_trackingMarkerUpdate";
 
 #define TICKETSYSTEM_TICKETS_START(COUNT) tf47_core_ticketsystem_tickets\
     = COUNT; publicVariable "tf47_core_ticketsystem_tickets";
@@ -55,10 +54,10 @@
 #define REGISTER_DEFAULT(TICKETS) tf47_core_ticketsystem_defaultTickets\
     = TICKETS; publicVariable "tf47_core_ticketsystem_defaultTickets";
 
-#define REGISTER_TICKETCOST(SLOTNAME, COST) [SLOTNAME, COST],
 
 #define REGISTER_SLOT_TICKETCOST_BEGIN tf47_core_ticketsystem_slotCost = [
-#define REGISTER_SLOT_TICKETCOST_END [objNull, 0]];\
+#define REGISTER_TICKETCOST(SLOTNAME, COST) [SLOTNAME, COST],
+#define REGISTER_SLOT_TICKETCOST_END ["objNull", 0]];\
     publicVariable "tf47_core_ticketsystem_slotCost";
 
 #define REGISTER_VEHICLE_TICKETCOST(VEHICLE, COST) [VEHICLE, COST] call\

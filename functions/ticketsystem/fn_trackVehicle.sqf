@@ -13,11 +13,13 @@ _markerType = [_vehicle, _side] call tf47_core_util_fnc_getMarkerType;
 _vehiclePos = getPos _vehicle;
 
 _marker = createMarker [format["tf47_core_ticketsystem_trackingMarker_%1",
-    str _vehicle],[_vehicle select 0, _vehicle select 1]];
+    str _vehicle],[_vehiclePos select 0, _vehiclePos select 1]];
 _marker setMarkerShape "ICON";
 _marker setMarkerType _markerType;
 
-_trackingHandle = [_vehicle_, _marker] spawn {
+_trackingHandle = [_vehicle, _marker] spawn {
+    _vehicle = _this select 0;
+    _marker = _this select 1;
     _keepTracking = true;
     while {_keepTracking} do {
         sleep tf47_core_ticketsystem_trackingMarkerUpdate;
@@ -29,5 +31,7 @@ _trackingHandle = [_vehicle_, _marker] spawn {
         };
         _keepTracking = ((damage _vehicle) != 1);
     };
+    // TODO: add to config
+    sleep 300;
     deleteMarker _marker;
 };

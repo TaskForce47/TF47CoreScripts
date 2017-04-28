@@ -37,5 +37,8 @@ _vehicle addEventHandler["SeatSwitched", {
 
 _vehicle addEventHandler["Killed", {
     _vehicle = _this select 0;
-    
+    [_vehicle] call tf47_core_ticketsystem_fnc_changeTickets;
 }];
+
+// TODO: side detection
+[_vehicle, west] call tf47_core_ticketsystem_fnc_trackVehicle;
