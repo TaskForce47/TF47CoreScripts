@@ -44,5 +44,8 @@ if(_customText == "") then {
 tf47_core_ticketsystem_tickets = tf47_core_ticketsystem_tickets + _amount;
 publicVariable "tf47_core_ticketsystem_tickets";
 
+// TODO: action stuff
+[_vehicle, 1] call tf47_core_ticketsystem_fnc_insertTicketlog;
+
 [_notificationClass,[_message]] remoteExecCall
     ["BIS_fnc_showNotification", 0];

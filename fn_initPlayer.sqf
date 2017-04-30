@@ -49,5 +49,5 @@ _player setVariable ["tf47_core_ticketsystem_slotCost", _slotCost, true];
 
 _player addEventHandler["Killed", {
     _player = _this select 0;
-
+    // TODO: ticket system
 }];
