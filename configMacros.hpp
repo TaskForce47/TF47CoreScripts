@@ -1,6 +1,3 @@
-
-
-
 #define AIR 1
 #define TANK 2
 #define CCT 3
@@ -11,8 +8,7 @@
 #define WHITELIST(STATE)  tf47_core_whitelistActive = STATE;\
     publicVariable "tf47_core_whitelistActive";
 #define WHITELIST_SYSTEM(STATE) tf47_core_whitelistSystem = STATE;\
-    publicVariable "tf47_core_whitelistSystem";\
-    [] call tf47_core_fnc_initWhitelist;
+    publicVariable "tf47_core_whitelistSystem";
 
 #define REGISTER_SLOT_BEGIN tf47_core_whitelistedSlots = [
 #define REGISTER_SLOT(SLOTNAME, WHITELISTID) [SLOTNAME, WHITELISTID],

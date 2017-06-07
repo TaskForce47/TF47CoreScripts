@@ -5,5 +5,5 @@ class tf47_core_whitelistSlotFail
   description = "Bitte wähle einen anderen Slot!";
   pictureBackground = "";
   picture = "TF47CoreScripts\data\slotFail.paa";
-  pictureColor[] = {1,1,1,1}; 
+  pictureColor[] = {1,1,1,1};
 };

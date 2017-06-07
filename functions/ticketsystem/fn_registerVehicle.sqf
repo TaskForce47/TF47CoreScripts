@@ -1,18 +1,31 @@
+/**
+ *  @author Willard
+ *  @description
+ *  Registers the vehicle's ticket cost
+ *  @params 
+ *      param 0: The vehicle <object> (required)
+ *      param 1: Ticket amount <number>
+ *  @return nothing
+ */
 _result = _this params [
     ["_vehicle", objNull, [objNull]],
     ["_cost", 0, [0]]
 ];
 
-if(!isServer) exitWith { hint "server"; };
-
-if(isNull _vehicle) exitWith {
-    // TODO
-    hint "params";
+if(!isServer) exitWith {
+     ["registerVehicle not called on Server!", "Error", true] spawn
+        BIS_fnc_guiMessage;
 };
 
+if(isNull _vehicle) exitWith {
+    ["registerVehicle called with null vehicle!", "Error", true] spawn
+        BIS_fnc_guiMessage;
+};
+
+// set the ticket cost
 _vehicle setVariable ["tf47_core_ticketsystem_cost", _cost, true];
 
-
+// track last "effective" commander
 _vehicle addEventHandler["GetIn", {
     _vehicle = _this select 0;
     _lastDriver = commander _vehicle;
@@ -35,10 +48,21 @@ _vehicle addEventHandler["SeatSwitched", {
       true];
 }];
 
+// change tickets when vehicle ist killed
 _vehicle addEventHandler["Killed", {
     _vehicle = _this select 0;
-    [_vehicle] call tf47_core_ticketsystem_fnc_changeTickets;
+    [_vehicle, 2] call tf47_core_ticketsystem_fnc_changeTickets;
 }];
 
-// TODO: side detection
-[_vehicle, west] call tf47_core_ticketsystem_fnc_trackVehicle;
+// detect side via config
+_sideNumber = getNumber(configFile >> "CfgVehicles" >> typeOf _vehicle >> 
+    "side");
+_side = switch (_sideNumber) do {
+    case 1: { west };
+    case 2: { east };
+    case 3: { resistance };
+    default { civilian };
+};
+
+// start the vehicle tracking
+[_vehicle, _side] call tf47_core_ticketsystem_fnc_trackVehicle;

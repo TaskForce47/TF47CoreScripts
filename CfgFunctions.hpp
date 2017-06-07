@@ -4,7 +4,6 @@ class tf47_core
     {
         file = "TF47CoreScripts";
         class initDatabase {};
-        class initWhitelist {};
         class initTicketsystem {};
         class initPlayer {};
         class init {};

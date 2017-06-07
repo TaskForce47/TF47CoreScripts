@@ -1,13 +1,23 @@
+/**
+ *  @author Willard
+ *  @description
+ *  Tracks a vehicle (map marker, desertion)
+ *  @params 
+ *      param 0: The vehicle <object> (required)
+ *      param 1: The vehicles side <side> (required)
+ *  @return nothing
+ */
 _result = _this params [
     ["_vehicle", objNull, [objNull]],
     ["_side", west, [west]]
 ];
 
 if(isNull _vehicle) exitWith {
-    // TODO
-    hint "params";
+     ["trackVehicle called with null vehicle!", "Error", true] spawn
+        BIS_fnc_guiMessage;
 };
 
+// determine marker type and create the marker
 _markerType = [_vehicle, _side] call tf47_core_util_fnc_getMarkerType;
 
 _vehiclePos = getPos _vehicle;
@@ -17,6 +27,8 @@ _marker = createMarker [format["tf47_core_ticketsystem_trackingMarker_%1",
 _marker setMarkerShape "ICON";
 _marker setMarkerType _markerType;
 
+// tracking loop, keeps tracking until the vehilce is either dead or
+// deserted, and deletes the marker after 300s
 _trackingHandle = [_vehicle, _marker] spawn {
     _vehicle = _this select 0;
     _marker = _this select 1;
@@ -31,7 +43,6 @@ _trackingHandle = [_vehicle, _marker] spawn {
         };
         _keepTracking = ((damage _vehicle) != 1);
     };
-    // TODO: add to config
     sleep 300;
     deleteMarker _marker;
 };

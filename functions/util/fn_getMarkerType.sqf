@@ -1,13 +1,23 @@
+/**
+ *  @author Willard
+ *  @description
+ *  Determines the marker type for the given vehicle and side
+ *  @params 
+ *      param 0: The vehicle <object> (required)
+ *      param 1: The vehicles side <side> (required)
+ *  @returns the marker type <string>
+ */
 _result = _this params [
     ["_vehicle", objNull, [objNull]],
     ["_side", west, [west]]
 ];
 
 if(isNull _vehicle) exitWith {
-    // TODO
-    hint "params";
+     ["getMarkerType called with null vehicle!", "Error", true] spawn
+        BIS_fnc_guiMessage;
 };
 
+// determine side prefix
 _markerSide = switch (_side) do {
     case (west): {
         "b_"
@@ -20,12 +30,15 @@ _markerSide = switch (_side) do {
     };
 };
 
+// determine the marker type
 _configPath = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
 
+// medical
 if(getNumber(_configPath >> "attendant") == 1) exitWith {
     format["%1med", _markerSide];
 };
 
+// support
 if (
     getNumber (_configPath >> "transportRepair") > 0 ||
     getNumber (_configPath >>  "transportFuel") > 0 ||
@@ -36,26 +49,32 @@ if (
     format["%1maint", _markerSide];
 };
 
+// plane
 if (_vehicle isKindOf "Plane") exitWith {
     format["%1plane", _markerSide];
 };
 
+// helicopter
 if (_vehicle isKindOf "Air") exitWith {
     format["%1air", _markerSide];
 };
 
+// mortar
 if (_vehicle isKindOf "StaticMortar") exitWith {
     format["%1mortar", _markerSide];
 };
 
+// artillery
 if (getNumber (_configPath >> "artilleryScanner") == 1) exitWith {
     format["%1art", _markerSide];
 };
 
+// car/motorized infantry
 if (_vehicle isKindOf "Car") exitWith {
     format["%1motor_inf", _markerSide];
 };
 
+// mechanized infantry or armor
 if (_vehicle isKindOf "Tank") exitWith {
     if (getNumber (_configPath >> "transportSoldier") > 0) then {
         format["%1mech_inf", _markerSide];
@@ -64,8 +83,12 @@ if (_vehicle isKindOf "Tank") exitWith {
     };
 };
 
+// ship
 if (_vehicle isKindOf "Ship") exitWith {
     format["%1naval", _markerSide];
 };
 
+// default is unkown
 format["%1unknown", _markerSide];
+
+_markerSide
