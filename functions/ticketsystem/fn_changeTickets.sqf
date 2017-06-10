@@ -65,13 +65,33 @@ if(_customText == "") then {
     _message = _customText;
 };
 
+// check for soft/hardcap
+_newTickets = tf47_core_ticketsystem_tickets + _amount;;
+
+if(_newTickets >= tf47_core_ticketsystem_softcap) then {
+    _newTickets = tf47_core_ticketsystem_softcap + 
+        (((tf47_core_ticketsystem_tickets + _amount)
+        - tf47_core_ticketsystem_softcap) / 2);
+};
+
+if(_newTickets > tf47_core_ticketsystem_hardcap) then {
+    _newTickets = tf47_core_ticketsystem_hardcap;
+};
+
 // "commit" the changed tickets
-tf47_core_ticketsystem_tickets = tf47_core_ticketsystem_tickets + _amount;
+tf47_core_ticketsystem_tickets = _newTickets;
 publicVariable "tf47_core_ticketsystem_tickets";
 
 // insert ticket change into the db
-[_vehicle, _action] call tf47_core_ticketsystem_fnc_insertTicketlog;
+[_action, _amount, _vehicle] call tf47_core_ticketsystem_fnc_insertTicketlog;
 
 // show message to all clients
 [_notificationClass,[_message]] remoteExecCall
     ["BIS_fnc_showNotification", 0];
+
+// end mission when there're no tickets left
+if(tf47_core_ticketsystem_tickets <= 0) then {
+    [99] call tf47_core_ticketsystem_fnc_insertTicketlog;
+     ["tf47_core_whitelistSlotFail", false, true] remoteExecCall
+      ["BIS_fnc_endMission"];
+};
