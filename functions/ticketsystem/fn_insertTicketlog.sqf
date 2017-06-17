@@ -48,7 +48,7 @@ if(!(isNull _player)) then {
 
 // default id is "NULL" (no relationship)
 if(_playerId <= 0) then {
-    _playerId = "NULL";
+    _playerId = objNull;
 };
 
 // build the querey and commit it
@@ -61,5 +61,15 @@ _query = format["0:SQL:insertTicketlog:%1:%2:%3:%4:%5:%6:%7:%8",
     _playerId,
     _description,
     _comment];
-
+diag_log str [ tf47_core_ticketsystem_missionId,
+    _actionId,
+    _change,
+    tf47_core_ticketsystem_tickets,
+    tf47_core_ticketsystem_round,
+    _playerId,
+    _description,
+    _comment];
 _queryResult = "extDB3" callExtension _query;
+diag_log "debug";
+diag_log str _queryResult;
+diag_log str _query;
