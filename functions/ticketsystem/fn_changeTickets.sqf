@@ -55,6 +55,7 @@ if(_positiveChange) then {
     _ticketMessage = "<t color='#b2ff4c'>Ticket Gewinn: </t>";
 } else {
     _ticketMessage = "<t color='#ff4c33'>Ticket Verlust: </t>";
+    _notificationClass = "tf47_core_ticketLoss";
     _amount = (-1) * _amount;
 };
 

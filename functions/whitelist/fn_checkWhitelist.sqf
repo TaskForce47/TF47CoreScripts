@@ -57,16 +57,19 @@ _resultArray = ((call compileFinal _queryResult) select 1);
 // if he isn't on the whitelist, kick him out
 if((count _resultArray) == 0) exitWith {
     _unit action ["GetOut", _vehicle];
-    ["tf47_core_tankFail", ["Du befindest dich nicht auf der Whitelist!"]] call BIS_fnc_showNotification;
+    ["tf47_core_tankFail", ["Du befindest dich nicht auf der Whitelist!"]] 
+        remoteExecCall ["BIS_fnc_showNotification", owner _unit];
 };
 
 // if he isn't in the correct slot, kick him out
 if(!((str _unit) in _whitelistSlots)) exitWith {
     _unit action ["GetOut", _vehicle];
-    ["tf47_core_tankFail", ["Du bist im falschen Slot für dieses Fahrzeug!"]] call BIS_fnc_showNotification;
+    ["tf47_core_tankFail", ["Du bist im falschen Slot für dieses Fahrzeug!"]] 
+        remoteExecCall ["BIS_fnc_showNotification", owner _unit];
 };
 
 // show success message
 if(_successMessage) then {
-    ["tf47_core_tankSuccess", ["Überprüfung erfolgreich!"]] call BIS_fnc_showNotification;
+    ["tf47_core_tankSuccess", ["Überprüfung erfolgreich!"]] 
+        remoteExecCall ["BIS_fnc_showNotification", owner _unit];
 };

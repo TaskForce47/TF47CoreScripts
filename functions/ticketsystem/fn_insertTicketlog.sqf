@@ -11,7 +11,7 @@
 _result = _this params [
     ["_actionId", 0, [0]],
     ["_change", 0, [0]],
-    ["_object", objNull, [objNull],
+    ["_object", objNull, [objNull]],
     ["_comment", "", [""]]
 ];
 

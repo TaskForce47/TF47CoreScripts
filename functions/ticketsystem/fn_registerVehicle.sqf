@@ -15,11 +15,13 @@ _result = _this params [
 if(!isServer) exitWith {
      ["registerVehicle not called on Server!", "Error", true] spawn
         BIS_fnc_guiMessage;
+    diag_log "registerVehicle not called on Server!";
 };
 
 if(isNull _vehicle) exitWith {
     ["registerVehicle called with null vehicle!", "Error", true] spawn
         BIS_fnc_guiMessage;
+    diag_log "registerVehicle called with null vehicle!";
 };
 
 // set the ticket cost
