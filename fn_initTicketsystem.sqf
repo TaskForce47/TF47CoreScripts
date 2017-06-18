@@ -18,8 +18,10 @@ _lastRound = 0;
 if((typeName _result) == "ARRAY") then {
     if((count _result) != 0) then {
         _lastRound = (_result select 0) select 0;
-        if(_lastRound == "") then {
-            _lastRound = 0;
+        if(typeName _lastRound == "STRING") then {
+            if(_lastRound == "") then {
+                _lastRound = 0;
+            };
         };
     };
 };

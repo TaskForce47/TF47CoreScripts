@@ -84,7 +84,7 @@ tf47_core_ticketsystem_tickets = _newTickets;
 publicVariable "tf47_core_ticketsystem_tickets";
 
 // insert ticket change into the db
-[_action, _amount, _vehicle] call tf47_core_ticketsystem_fnc_insertTicketlog;
+[_action, _amount, _object] call tf47_core_ticketsystem_fnc_insertTicketlog;
 
 // show message to all clients
 [_notificationClass,[_message]] remoteExecCall
@@ -92,7 +92,7 @@ publicVariable "tf47_core_ticketsystem_tickets";
 
 // end mission when there're no tickets left
 if(tf47_core_ticketsystem_tickets <= 0) then {
-    [99] call tf47_core_ticketsystem_fnc_insertTicketlog;
+    [1] call tf47_core_ticketsystem_fnc_insertTicketlog;
      ["tf47_core_whitelistSlotFail", false, true] remoteExecCall
       ["BIS_fnc_endMission"];
 };

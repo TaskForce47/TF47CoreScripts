@@ -19,9 +19,9 @@ _playerId = 0;
 _description = "";
 
 // determine the playerid
-if(!(isNull _player)) then {
+if(!(isNull _object)) then {
     if(isPlayer _object) then {
-        _playerArmaId = getPlayerUID _unit;
+        _playerArmaId = getPlayerUID _object;
 
         // in single player we use Willard's playerid
         if(_playerArmaId == "_SP_PLAYER_") then {
@@ -39,16 +39,16 @@ if(!(isNull _player)) then {
                 _playerId = (_result select 0) select 0;
             };
         };
-        _description = name _player;
+        _description = name _object;
     } else {
-        _description = getText(configfile >> "CfgVehicles" >> typeOf _vehicle 
+        _description = getText(configfile >> "CfgVehicles" >> typeOf _object 
             >> "displayName");
     };
 };
 
 // default id is "NULL" (no relationship)
 if(_playerId <= 0) then {
-    _playerId = objNull;
+    _playerId = "";
 };
 
 // build the querey and commit it
@@ -61,15 +61,5 @@ _query = format["0:SQL:insertTicketlog:%1:%2:%3:%4:%5:%6:%7:%8",
     _playerId,
     _description,
     _comment];
-diag_log str [ tf47_core_ticketsystem_missionId,
-    _actionId,
-    _change,
-    tf47_core_ticketsystem_tickets,
-    tf47_core_ticketsystem_round,
-    _playerId,
-    _description,
-    _comment];
+
 _queryResult = "extDB3" callExtension _query;
-diag_log "debug";
-diag_log str _queryResult;
-diag_log str _query;

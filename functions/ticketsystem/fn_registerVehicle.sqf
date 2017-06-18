@@ -53,7 +53,7 @@ _vehicle addEventHandler["SeatSwitched", {
 // change tickets when vehicle ist killed
 _vehicle addEventHandler["Killed", {
     _vehicle = _this select 0;
-    [_vehicle, 2] call tf47_core_ticketsystem_fnc_changeTickets;
+    [_vehicle, 1] call tf47_core_ticketsystem_fnc_changeTickets;
 }];
 
 // detect side via config
