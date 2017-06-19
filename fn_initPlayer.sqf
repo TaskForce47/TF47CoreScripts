@@ -68,5 +68,5 @@ _player setVariable ["tf47_core_ticketsystem_cost", _slotCost, true];
 // handle death
 _player addEventHandler["Killed", {
     _player = _this select 0;
-    [_player, 1] call tf47_core_ticketsystem_fnc_changeTickets;
+    [_player, 1] remoteExecCall ["tf47_core_ticketsystem_fnc_changeTickets", 2];
 }];
