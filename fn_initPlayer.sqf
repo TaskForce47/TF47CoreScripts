@@ -30,7 +30,7 @@ _queryResult = "extDB3" callExtension
     format["0:SQL:getPlayerNameByPlayerId:%1", _playerId];
 
 // if no result is found insert the new player, if a result is found,
-// check if the name changed and change it it's the case
+// check if the name has changed and change it if it's the case
 _result = (call compile _queryResult) select 1;
 if((typeName _result) == "ARRAY") then {
     if((count _result) == 0) then {
