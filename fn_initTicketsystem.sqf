@@ -31,7 +31,7 @@ tf47_core_ticketsystem_round = _lastRound + 1;
 publicVariable "tf47_core_ticketsystem_round";
 
 // show current tickets every 300s
-[] spawn {
+_scriptHandle = [] spawn {
     while {true} do {
         _message = format["Aktuelle Tickets: %1", 
             tf47_core_ticketsystem_tickets];
@@ -40,3 +40,6 @@ publicVariable "tf47_core_ticketsystem_round";
         sleep 300;
     };
 }
+
+[1, 0, objNull, tf47_core_ticketsystem_missionName] 
+    call tf47_core_ticketsystem_fnc_insertTicketlog;
