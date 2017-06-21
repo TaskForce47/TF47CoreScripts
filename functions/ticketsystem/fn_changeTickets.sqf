@@ -4,7 +4,7 @@
  *  Performs a ticket change, shows a notification and inserts it into
  *  the Database
  *  @params 
- *      param 0: Vehicle or Player <object> (required)
+ *      param 0: Vehicle or Player <object>
  *      param 1: Ticket amount <number>
  *      param 2: Action id <number>
  *      param 3: Is it a ticket gain <boolean>
@@ -25,11 +25,6 @@ if(!isServer) exitWith {
         BIS_fnc_guiMessage;
  };
 
-if(isNull _object) exitWith { 
-    ["changeTickets called with invalid object!", "Error", true] spawn
-        BIS_fnc_guiMessage;
- };
-
 // default change is no change
 if(_amount == 0) then {
     _amount = _object getVariable ["tf47_core_ticketsystem_cost", 0];
@@ -41,13 +36,17 @@ _notificationClass = "";
 _lastDriver = objNull;
 
 // determine message type (player/object)
-if(isPlayer _object) then {
-    _message = format["%1 ist gestorben!", name _object]
+if(isNull _object) then {
+    if(isPlayer _object) then {
+        _message = format["%1 ist gestorben!", name _object]
+    } else {
+        _message = format["%1 wurde zerstört!", getText (configFile >>
+            "CfgVehicles" >> (typeOf _object) >> "displayName")];
+        _lastDriver = (_vehicle getVariable ["tf47_core_ticketsystem_lastDriver",
+            objNull]);
+    };
 } else {
-    _message = format["%1 wurde zerstört!", getText (configFile >>
-        "CfgVehicles" >> (typeOf _object) >> "displayName")];
-    _lastDriver = (_vehicle getVariable ["tf47_core_ticketsystem_lastDriver",
-        objNull]);
+    _message = "";
 };
 
 // determine positive or negative change
