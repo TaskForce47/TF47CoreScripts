@@ -51,7 +51,7 @@ if(_playerId <= 0) then {
     _playerId = "";
 };
 
-// build the querey and commit it
+// build the query and commit it
 _query = format["0:SQL:insertTicketlog:%1:%2:%3:%4:%5:%6:%7:%8",
     tf47_core_ticketsystem_missionId,
     _actionId,
