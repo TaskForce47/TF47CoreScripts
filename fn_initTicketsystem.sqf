@@ -39,7 +39,7 @@ _scriptHandle = [] spawn {
             ["BIS_fnc_showNotification", 0];
         sleep 300;
     };
-}
+};
 
 [1, 0, objNull, tf47_core_ticketsystem_missionName] 
     call tf47_core_ticketsystem_fnc_insertTicketlog;

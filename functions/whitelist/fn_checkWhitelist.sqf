@@ -54,22 +54,32 @@ _queryResult = "extDB3" callExtension format["0:SQL:checkWhitelist:%1:%2", _play
 
 _resultArray = ((call compileFinal _queryResult) select 1);
 
+// determine notification
+_whitelistName = switch (_whitelistId) do {
+    case 1: { "air" };
+    case 1: { "tank" };
+    case 1: { "cct" };
+    default { ""};
+};
+
+_failNotification = format["tf47_core_%1Fail", _whitelistName];
+
 // if he isn't on the whitelist, kick him out
 if((count _resultArray) == 0) exitWith {
     _unit action ["GetOut", _vehicle];
-    ["tf47_core_tankFail", ["Du befindest dich nicht auf der Whitelist!"]] 
+    [_failNotification, ["Du befindest dich nicht auf der Whitelist!"]] 
         remoteExecCall ["BIS_fnc_showNotification", owner _unit];
 };
 
 // if he isn't in the correct slot, kick him out
 if(!((str _unit) in _whitelistSlots)) exitWith {
     _unit action ["GetOut", _vehicle];
-    ["tf47_core_tankFail", ["Du bist im falschen Slot für dieses Fahrzeug!"]] 
+    [_failNotification, ["Du bist im falschen Slot für dieses Fahrzeug!"]] 
         remoteExecCall ["BIS_fnc_showNotification", owner _unit];
 };
 
 // show success message
 if(_successMessage) then {
-    ["tf47_core_tankSuccess", ["Überprüfung erfolgreich!"]] 
+    [format["tf47_core_%1Success", _whitelistName], ["Überprüfung erfolgreich!"]] 
         remoteExecCall ["BIS_fnc_showNotification", owner _unit];
 };
