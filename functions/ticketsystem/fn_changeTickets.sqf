@@ -94,6 +94,6 @@ publicVariable "tf47_core_ticketsystem_tickets";
 if(tf47_core_ticketsystem_tickets <= 0) then {
     [2, 0, objNull, "Mission lost"] 
         call tf47_core_ticketsystem_fnc_insertTicketlog;
-    ["tf47_core_whitelistSlotFail", false, true] remoteExecCall
+    ["tf47_core_missionLost", false, true] remoteExecCall
         ["BIS_fnc_endMission"];
 };
