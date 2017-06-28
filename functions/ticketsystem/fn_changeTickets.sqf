@@ -34,16 +34,13 @@ _message = "";
 _ticketMessage = "";
 _notificationClass = "";
 _lastDriver = objNull;
-
 // determine message type (player/object)
-if(isNull _object) then {
+if(!isNull _object) then {
     if(isPlayer _object) then {
         _message = format["%1 ist gestorben!", name _object]
     } else {
         _message = format["%1 wurde zerstört!", getText (configFile >>
             "CfgVehicles" >> (typeOf _object) >> "displayName")];
-        _lastDriver = (_vehicle getVariable ["tf47_core_ticketsystem_lastDriver",
-            objNull]);
     };
 } else {
     _message = "";

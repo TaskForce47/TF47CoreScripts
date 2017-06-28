@@ -41,6 +41,28 @@ if(!(isNull _object)) then {
         };
         _description = name _object;
     } else {
+        _lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver",
+            objNull]);
+        if(!isNull _lastDriver) then {
+            _playerArmaId = getPlayerUID _lastDriver;
+
+            // in single player we use Willard's playerid
+            if(_playerArmaId == "_SP_PLAYER_") then {
+                _playerArmaId = "76561198022749433";
+            };
+
+            // get the database player_id
+            _playerIdResult = "extDB3" callExtension
+                format["0:SQL:getPlayerIdByPlayerId:%1", _playerArmaId];
+
+            _result = (call compile _playerIdResult) select 1;
+
+            if((typeName _result) == "ARRAY") then {
+                if((count _result) != 0) then {
+                    _playerId = (_result select 0) select 0;
+                };
+            };
+        };
         _description = getText(configfile >> "CfgVehicles" >> typeOf _object 
             >> "displayName");
     };
