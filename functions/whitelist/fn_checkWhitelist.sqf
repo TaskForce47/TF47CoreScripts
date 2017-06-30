@@ -57,9 +57,9 @@ _resultArray = ((call compileFinal _queryResult) select 1);
 // determine notification
 _whitelistName = switch (_whitelistId) do {
     case 1: { "air" };
-    case 1: { "tank" };
-    case 1: { "cct" };
-    default { ""};
+    case 2: { "tank" };
+    case 3: { "cct" };
+    default { "" };
 };
 
 _failNotification = format["tf47_core_%1Fail", _whitelistName];

@@ -41,5 +41,5 @@ _scriptHandle = [] spawn {
     };
 };
 
-[1, 0, objNull, tf47_core_ticketsystem_missionName] 
+[10, 0, objNull, tf47_core_ticketsystem_missionName] 
     call tf47_core_ticketsystem_fnc_insertTicketlog;

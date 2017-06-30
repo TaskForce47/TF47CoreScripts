@@ -89,7 +89,7 @@ publicVariable "tf47_core_ticketsystem_tickets";
 
 // end mission when there're no tickets left
 if(tf47_core_ticketsystem_tickets <= 0) then {
-    [2, 0, objNull, "Mission lost"] 
+    [11, 0, objNull, "Mission lost"] 
         call tf47_core_ticketsystem_fnc_insertTicketlog;
     ["tf47_core_missionLost", false, true] remoteExecCall
         ["BIS_fnc_endMission"];
