@@ -66,7 +66,18 @@ if(_slotCost == 0) then {
 _player setVariable ["tf47_core_ticketsystem_cost", _slotCost, true];
 
 // handle death
-_player addEventHandler["Killed", {
-    _player = _this select 0;
-    [_player, 3] remoteExecCall ["tf47_core_ticketsystem_fnc_changeTickets", 2];
-}];
+/*
+[_player, {
+    tf47_clientId = owner _this; 
+    tf47_clientId publicVariableClient "tf47_clientId";
+}] remoteExecCall ["bis_fnc_call", 2]; 
+*/
+[_player, {
+    _pl = _this;
+    _pl addEventHandler ["Killed", {
+        _killedPlayer = _this select 0;
+        [_killedPlayer, 3] remoteExecCall 
+            ["tf47_core_ticketsystem_fnc_changeTickets", 2];
+    }];
+}] remoteExecCall ["bis_fnc_call", _player]; 
+//tf47_clientId = nil;

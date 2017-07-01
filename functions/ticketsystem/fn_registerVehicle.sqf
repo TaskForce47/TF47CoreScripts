@@ -51,12 +51,13 @@ _vehicle addEventHandler["SeatSwitched", {
 }];
 
 // change tickets when vehicle ist killed
-_vehicle addEventHandler["Killed", {
+[_vehicle, {_this addEventHandler["Killed", {
     _vehicle = _this select 0;
     if(!(_vehicle getVariable ["tf47_core_ticketsystem_despawn", false])) then {
-        [_vehicle, 1] call tf47_core_ticketsystem_fnc_changeTickets;
+        [_vehicle, 1] remoteExecCall 
+            ["tf47_core_ticketsystem_fnc_changeTickets", 2];
     };
-}];
+}];}] remoteExecCall ["bis_fnc_call", _vehicle]; 
 
 // detect side via config
 _sideNumber = getNumber(configFile >> "CfgVehicles" >> typeOf _vehicle >> 

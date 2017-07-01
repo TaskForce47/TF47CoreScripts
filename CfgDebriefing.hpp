@@ -12,7 +12,7 @@ class tf47_core_missionLost
 {
   title = "Mission verloren";
   subtitle = "Es sind keine Tickets mehr übrig!";
-  description = "Wir müssen uns zurückziehen!"
+  description = "Wir müssen uns zurückziehen!";
   pictureBackground = "";
   picture = "TF47CoreScripts\data\ticketLoose.paa";
   pictureColor[] = {1,1,1,1};
