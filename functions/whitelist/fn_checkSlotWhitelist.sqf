@@ -45,6 +45,6 @@ _queryResult = "extDB3" callExtension _query;
 _resultArray = ((call compileFinal _queryResult) select 1);
 if((count _resultArray) == 0) exitWith {
     _clientId = owner _player;
-    ["tf47_core_whitelistSlotFail",false, true] remoteExecCall
+    ["tf47_core_whitelistSlotFail"] remoteExecCall
       ["BIS_fnc_endMission", _clientId];
 };
