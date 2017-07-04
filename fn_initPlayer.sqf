@@ -76,6 +76,8 @@ _player setVariable ["tf47_core_ticketsystem_cost", _slotCost, true];
     _pl = _this;
     _pl addEventHandler ["Killed", {
         _killedPlayer = _this select 0;
+        diag_log "Killed Debug";
+        diag_log _this;
         [_killedPlayer, 3] remoteExecCall 
             ["tf47_core_ticketsystem_fnc_changeTickets", 2];
     }];
