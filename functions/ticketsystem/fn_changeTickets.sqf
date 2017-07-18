@@ -77,7 +77,7 @@ if(_newTickets > tf47_core_ticketsystem_hardcap) then {
 };
 
 // "commit" the changed tickets
-tf47_core_ticketsystem_tickets = _newTickets;
+tf47_core_ticketsystem_tickets = floor _newTickets;
 publicVariable "tf47_core_ticketsystem_tickets";
 
 // insert ticket change into the db
