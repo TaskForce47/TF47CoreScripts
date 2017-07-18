@@ -16,7 +16,6 @@ _result = _this params [
 ];
 
 _playerId = 0;
-_description = "";
 
 // determine the playerid
 if(!(isNull _object)) then {
@@ -39,7 +38,7 @@ if(!(isNull _object)) then {
                 _playerId = (_result select 0) select 0;
             };
         };
-        _description = name _object;
+        _comment = name _object;
     } else {
         _lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver",
             objNull]);
@@ -63,7 +62,7 @@ if(!(isNull _object)) then {
                 };
             };
         };
-        _description = getText(configfile >> "CfgVehicles" >> typeOf _object 
+        _comment = getText(configfile >> "CfgVehicles" >> typeOf _object 
             >> "displayName");
     };
 };
@@ -81,7 +80,6 @@ _query = format["0:SQL:insertTicketlog:%1:%2:%3:%4:%5:%6:%7:%8",
     tf47_core_ticketsystem_tickets,
     tf47_core_ticketsystem_round,
     _playerId,
-    _description,
     _comment];
 
 _queryResult = "extDB3" callExtension _query;

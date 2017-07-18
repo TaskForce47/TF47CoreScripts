@@ -43,3 +43,10 @@ _scriptHandle = [] spawn {
 
 [10, 0, objNull, tf47_core_ticketsystem_missionName] 
     call tf47_core_ticketsystem_fnc_insertTicketlog;
+
+addMissionEventHandler ["Ended",{ 
+    if((["win", _this] call BIS_fnc_inString)) then {
+        [11, 0, objNull, "Mission gewonnen"] 
+            call tf47_core_ticketsystem_fnc_insertTicketlog;
+    };
+}];
