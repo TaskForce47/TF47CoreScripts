@@ -25,29 +25,31 @@ if(_playerId == "_SP_PLAYER_") then {
     _playerId = "76561198022749433";
 };
 
-// get the DB player_id with the arma player id
-_queryResult = "extDB3" callExtension
-    format["0:SQL:getPlayerNameByPlayerId:%1", _playerId];
+if(hasInterface && (name _player != "Error: No unit")) then {
+    _name = name _player;
+    // get the DB player_id with the arma player id
+    _queryResult = "extDB3" callExtension
+        format["0:SQL:getPlayerNameByPlayerId:%1", _playerId];
 
-// if no result is found insert the new player, if a result is found,
-// check if the name has changed and change it if it's the case
-_result = (call compile _queryResult) select 1;
-if((typeName _result) == "ARRAY") then {
-    if((count _result) == 0) then {
-        _queryResult = "extDB3" callExtension
-            format["0:SQL:insertPlayerName:%1:%2", _playerId, name _player];
-    } else {
-        _name = (_result select 0) select 0;
-        if(_name != name _player) then {
+    // if no result is found insert the new player, if a result is found,
+    // check if the name has changed and change it if it's the case
+    _result = (call compile _queryResult) select 1;
+    if((typeName _result) == "ARRAY") then {
+        if((count _result) == 0) then {
             _queryResult = "extDB3" callExtension
-                format["0:SQL:updatePlayerName:%1:%2", name _player, _playerId];
+                format["0:SQL:insertPlayerName:%1:%2", _playerId, _name];
+        } else {
+            _oldName = (_result select 0) select 0;
+            if(_name != _oldName) then {
+                _queryResult = "extDB3" callExtension
+                    format["0:SQL:updatePlayerName:%1:%2", _oldName, _playerId];
+            };
         };
+    } else {
+        ["initPlayer recieved malformed sql result!", "Error", true] spawn
+            BIS_fnc_guiMessage;
     };
-} else {
-    ["initPlayer recieved malformed sql result!", "Error", true] spawn
-        BIS_fnc_guiMessage;
 };
-
 
 // determine slot cost
 _slotCost = 0;
