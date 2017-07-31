@@ -25,7 +25,7 @@ if(_playerId == "_SP_PLAYER_") then {
     _playerId = "76561198022749433";
 };
 
-if(!hasInterface && (name _player != "Error: No unit")) then {
+if(hasInterface && (name _player != "Error: No unit")) then {
     _name = name _player;
     // get the DB player_id with the arma player id
     _queryResult = "extDB3" callExtension
