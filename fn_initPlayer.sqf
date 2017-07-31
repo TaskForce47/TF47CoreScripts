@@ -18,41 +18,39 @@ if(!isServer) exitWith {
 // determine slot and player id
 _slotString = str _player;
 
-_nul = [_player] spawn {
-    _player = _this select 0;
-    _playerId = getPlayerUID _player;
 
-    // In sp we use Willard's player id
-    if(_playerId == "_SP_PLAYER_") then {
-        _playerId = "76561198022749433";
-    };
+_playerId = getPlayerUID _player;
 
-    waitUntil{(name _player) != "Error: No unit"};
+// In sp we use Willard's player id
+if(_playerId == "_SP_PLAYER_") then {
+    _playerId = "76561198022749433";
+};
 
-    if(hasInterface) then {
-        _name = name _player;
-        // get the DB player_id with the arma player id
-        _queryResult = "extDB3" callExtension
-            format["0:SQL:getPlayerNameByPlayerId:%1", _playerId];
+waitUntil{(name _player) != "Error: No unit"};
+// not contains hc
+if(!(["HC", str _playerId] call BIS_fnc_inString) then {
+    _name = name _player;
+    // get the DB player_id with the arma player id
+    _queryResult = "extDB3" callExtension
+        format["0:SQL:getPlayerNameByPlayerId:%1", _playerId];
 
-        // if no result is found insert the new player, if a result is found,
-        // check if the name has changed and change it if it's the case
-        _result = (call compile _queryResult) select 1;
-        if((typeName _result) == "ARRAY") then {
-            if((count _result) == 0) then {
-                _queryResult = "extDB3" callExtension
-                    format["0:SQL:insertPlayerName:%1:%2", _playerId, _name];
-            } else {
-                _oldName = (_result select 0) select 0;
-                if(_name != _oldName) then {
-                    _queryResult = "extDB3" callExtension
-                        format["0:SQL:updatePlayerName:%1:%2", _oldName, _playerId];
-                };
-            };
+    // if no result is found insert the new player, if a result is found,
+    // check if the name has changed and change it if it's the case
+    _result = (call compile _queryResult) select 1;
+    if((typeName _result) == "ARRAY") then {
+        if((count _result) == 0) then {
+            _queryResult = "extDB3" callExtension
+                format["0:SQL:insertPlayerName:%1:%2", _playerId, _name];
         } else {
-            ["initPlayer recieved malformed sql result!", "Error", true] spawn
-                BIS_fnc_guiMessage;
+            _oldName = (_result select 0) select 0;
+            if(_name != _oldName) then {
+                _queryResult = "extDB3" callExtension
+                    format["0:SQL:updatePlayerName:%1:%2", _oldName, _playerId];
+            };
         };
+    } else {
+        ["initPlayer recieved malformed sql result!", "Error", true] spawn
+            BIS_fnc_guiMessage;
     };
 };
 
