@@ -28,7 +28,7 @@ if(_playerId == "_SP_PLAYER_") then {
 
 waitUntil{(name _player) != "Error: No unit"};
 // not contains hc
-if(!(["HC", str _playerId] call BIS_fnc_inString) then {
+if(!(["HC", str _playerId] call BIS_fnc_inString)) then {
     _name = name _player;
     // get the DB player_id with the arma player id
     _queryResult = "extDB3" callExtension
