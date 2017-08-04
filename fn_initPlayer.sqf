@@ -18,6 +18,7 @@ if(!isServer) exitWith {
 // determine slot and player id
 _slotString = str _player;
 
+
 _playerId = getPlayerUID _player;
 
 // In sp we use Willard's player id
@@ -25,7 +26,9 @@ if(_playerId == "_SP_PLAYER_") then {
     _playerId = "76561198022749433";
 };
 
-if(hasInterface && (name _player != "Error: No unit")) then {
+waitUntil{(name _player) != "Error: No unit"};
+// not contains hc
+if(!(["HC", str _playerId] call BIS_fnc_inString)) then {
     _name = name _player;
     // get the DB player_id with the arma player id
     _queryResult = "extDB3" callExtension
