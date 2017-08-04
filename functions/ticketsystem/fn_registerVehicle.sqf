@@ -49,10 +49,27 @@ _vehicle addEventHandler["SeatSwitched", {
   _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
       true];
 }];
+/*
+_vehicle addEventHandler["GetOut", {
+    _vehicle = _this select 0;
+    if((crew _vehicle) == 0) then {
+        _vehicle setVariable ["tf47_core_ticketsystem_leftTime", time];
+        _handle = ["tf47_core_ticketsystem_fnc_handleDesertion", 
+            	tf47_core_ticketsystem_desertionTime, _vehicle] 
+                call CBA_fnc_addPerFrameHandler;
 
+    };
+}]
+*/
 // change tickets when vehicle ist killed
 [_vehicle, {_this addEventHandler["Killed", {
     _vehicle = _this select 0;
+
+    if(!isNull ((UAVControl _vehicle) select 0)) then {
+        _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", 
+        (UAVControl _vehicle) select 0, true];
+    };
+
     if(!(_vehicle getVariable ["tf47_core_ticketsystem_despawn", false])) then {
         [_vehicle, 1] remoteExecCall 
             ["tf47_core_ticketsystem_fnc_changeTickets", 2];
