@@ -39,5 +39,6 @@ class tf47_core_ticketsystem
         class changeTickets {};
         class trackVehicle {};
         class insertTicketlog {};
+        class handleDesertion {};
     };
 };

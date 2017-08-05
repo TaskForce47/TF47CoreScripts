@@ -39,8 +39,13 @@ if(!isNull _object) then {
     if(isPlayer _object) then {
         _message = format["%1 ist gestorben!", name _object]
     } else {
-        _message = format["%1 wurde zerstört!", getText (configFile >>
-            "CfgVehicles" >> (typeOf _object) >> "displayName")];
+        if(_object getVariable ["tf47_core_ticketsystem_deserted", false]) then {
+            _message = format["%1 wurde zurückgelassen!", getText (configFile >>
+                "CfgVehicles" >> (typeOf _object) >> "displayName")];
+        } else {
+            _message = format["%1 wurde zerstört!", getText (configFile >>
+                "CfgVehicles" >> (typeOf _object) >> "displayName")];
+        };
     };
 } else {
     _message = "";

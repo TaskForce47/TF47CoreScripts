@@ -39,6 +39,11 @@ _vehicle addEventHandler["GetIn", {
     };
     _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
         true];
+    
+    _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+	if(_handle != -1) then {
+		[_handle] call CBA_fnc_removePerFrameHandler;
+	};
 }];
 _vehicle addEventHandler["SeatSwitched", {
   _vehicle = _this select 0;
@@ -49,18 +54,25 @@ _vehicle addEventHandler["SeatSwitched", {
   _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
       true];
 }];
-/*
+
 _vehicle addEventHandler["GetOut", {
     _vehicle = _this select 0;
-    if((crew _vehicle) == 0) then {
-        _vehicle setVariable ["tf47_core_ticketsystem_leftTime", time];
-        _handle = ["tf47_core_ticketsystem_fnc_handleDesertion", 
+
+    _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+    if(_handle != -1) then {
+        [_handle] call CBA_fnc_removePerFrameHandler;
+    };
+
+    if(count (crew _vehicle) == 0) then {
+        hint "1";
+        _handle = [tf47_core_ticketsystem_fnc_handleDesertion, 
             	tf47_core_ticketsystem_desertionTime, _vehicle] 
                 call CBA_fnc_addPerFrameHandler;
-
+        _vehicle setVariable ["tf47_core_ticketsystem_timeoutHandle", _handle, true];
+        _vehicle setVariable ["tf47_core_ticketsystem_getoutTime", time, true];
     };
-}]
-*/
+}];
+
 // change tickets when vehicle ist killed
 [_vehicle, {_this addEventHandler["Killed", {
     _vehicle = _this select 0;

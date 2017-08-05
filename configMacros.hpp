@@ -28,6 +28,12 @@
 #define TICKETSYSTEM_MARKER_TRACKING_DELAY(DELAY) tf47_core_ticketsystem_trackingMarkerUpdate\
     = DELAY; publicVariable "tf47_core_ticketsystem_trackingMarkerUpdate";
 
+#define TICKETSYSTEM_DESERTION_TIME(TIME) tf47_core_ticketsystem_desertionTime\
+    = TIME; publicVariable "tf47_core_ticketsystem_desertionTime";
+
+#define TICKETSYSTEM_DESERTION_MARKER(MARKER) tf47_core_ticketsystem_desertionMarker\
+    = MARKER; publicVariable "tf47_core_ticketsystem_desertionMarker";
+
 #define TICKETSYSTEM_TICKETS_START(COUNT) tf47_core_ticketsystem_tickets\
     = COUNT; publicVariable "tf47_core_ticketsystem_tickets";
 #define TICKETSYSTEM_SOFTCAP(COUNT) tf47_core_ticketsystem_softcap\
