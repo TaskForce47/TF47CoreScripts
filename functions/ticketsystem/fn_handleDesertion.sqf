@@ -11,7 +11,7 @@
  _result = (_this select 0) params [
     ["_vehicle", objNull, [objNull]]
 ];
-hint "2";
+
 if(!isServer) exitWith {
      ["registerVehicle not called on Server!", "Error", true] spawn
         BIS_fnc_guiMessage;

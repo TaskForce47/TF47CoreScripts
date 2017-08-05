@@ -64,7 +64,6 @@ _vehicle addEventHandler["GetOut", {
     };
 
     if(count (crew _vehicle) == 0) then {
-        hint "1";
         _handle = [tf47_core_ticketsystem_fnc_handleDesertion, 
             	tf47_core_ticketsystem_desertionTime, _vehicle] 
                 call CBA_fnc_addPerFrameHandler;
