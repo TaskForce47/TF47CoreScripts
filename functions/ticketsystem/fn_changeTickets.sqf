@@ -36,7 +36,7 @@ _notificationClass = "";
 _lastDriver = objNull;
 // determine message type (player/object)
 if(!isNull _object) then {
-    if(isPlayer _object) then {
+    if(_object isKindOf "Man") then {
         _message = format["%1 ist gestorben!", name _object]
     } else {
         if(_object getVariable ["tf47_core_ticketsystem_deserted", false]) then {

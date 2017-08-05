@@ -19,7 +19,7 @@ _playerId = 0;
 
 // determine the playerid
 if(!(isNull _object)) then {
-    if(isPlayer _object) then {
+    if(_object isKindOf "Man") then {
         _playerArmaId = getPlayerUID _object;
 
         // in single player we use Willard's playerid

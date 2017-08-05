@@ -29,7 +29,7 @@ if((isNull _vehicle) or (_postion == "") or (isNull _unit)) exitWith {
         BIS_fnc_guiMessage;
 };
 
-if(!isPlayer _unit) exitWith {
+if(!(_unit isKindOf "Man")) exitWith {
     ["checkWhitelist called without a valid player!", "Error", true] spawn
         BIS_fnc_guiMessage;
 };
