@@ -42,13 +42,8 @@ if(!(isNull _object)) then {
     } else {
         _lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver",
             objNull]);
-        if(!isNull _lastDriver) then {
-            _playerArmaId = getPlayerUID _lastDriver;
-
-            // in single player we use Willard's playerid
-            if(_playerArmaId == "_SP_PLAYER_") then {
-                _playerArmaId = "76561198022749433";
-            };
+        if(_lastDriver != "") then {
+            _playerArmaId = _lastDriver;
 
             // get the database player_id
             _playerIdResult = "extDB3" callExtension

@@ -35,7 +35,14 @@ _vehicle addEventHandler["GetIn", {
         _lastDriver = driver _vehicle;
     };
     if(isNull _lastDriver) then {
-        _lastDriver = objNull;
+        _lastDriver = "";
+    } else {
+        _lastDriver = getPlayerUID _lastDriver;
+
+        // in single player we use Willard's playerid
+        if(_lastDriver == "_SP_PLAYER_") then {
+            _lastDriver = "76561198022749433";
+        };
     };
     _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
         true];
@@ -46,13 +53,23 @@ _vehicle addEventHandler["GetIn", {
 	};
 }];
 _vehicle addEventHandler["SeatSwitched", {
-  _vehicle = _this select 0;
-  _lastDriver = commander _vehicle;
-  if(isNull (commander _vehicle)) then {
-      _lastDriver = driver _vehicle;
-  };
-  _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
-      true];
+    _vehicle = _this select 0;
+    _lastDriver = commander _vehicle;
+    if(isNull (commander _vehicle)) then {
+        _lastDriver = driver _vehicle;
+    };
+    if(isNull _lastDriver) then {
+        _lastDriver = "";
+    } else {
+        _lastDriver = getPlayerUID _lastDriver;
+
+        // in single player we use Willard's playerid
+        if(_lastDriver == "_SP_PLAYER_") then {
+            _lastDriver = "76561198022749433";
+        };
+    };
+    _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
+        true];
 }];
 
 _vehicle addEventHandler["GetOut", {
@@ -77,8 +94,20 @@ _vehicle addEventHandler["GetOut", {
     _vehicle = _this select 0;
 
     if(!isNull ((UAVControl _vehicle) select 0)) then {
-        _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", 
-        (UAVControl _vehicle) select 0, true];
+        _lastDriver = getPlayerUID ((UAVControl _vehicle) select 0);
+
+        // in single player we use Willard's playerid
+        if(_lastDriver == "_SP_PLAYER_") then {
+            _lastDriver = "76561198022749433";
+        };
+
+        _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver, 
+            true];
+    };
+
+    _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+    if(_handle != -1) then {
+        [_handle] call CBA_fnc_removePerFrameHandler;
     };
 
     if(!(_vehicle getVariable ["tf47_core_ticketsystem_despawn", false])) then {
