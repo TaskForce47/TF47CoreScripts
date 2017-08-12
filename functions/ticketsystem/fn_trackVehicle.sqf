@@ -34,14 +34,19 @@ _trackingHandle = [_vehicle, _marker] spawn {
     _marker = _this select 1;
     _keepTracking = true;
     while {_keepTracking} do {
-        sleep tf47_core_ticketsystem_trackingMarkerUpdate;
-        _marker setMarkerPos
-            [(getPos _vehicle) select 0, (getPos _vehicle) select 1];
-        if((damage _vehicle) == 1 || (_vehicle getVariable
-                ["tf47_core_ticketsystem_isDeserted", false])) then {
+        if(!isNull _vehicle) then {
+            sleep tf47_core_ticketsystem_trackingMarkerUpdate;
+            _marker setMarkerPos
+                [(getPos _vehicle) select 0, (getPos _vehicle) select 1];
+            if((damage _vehicle) == 1 || (_vehicle getVariable
+                    ["tf47_core_ticketsystem_isDeserted", false])) then {
+                _marker setMarkerAlpha 0.3;
+            };
+            _keepTracking = ((damage _vehicle) != 1);
+        } else {
+            _keepTracking = false;
             _marker setMarkerAlpha 0.3;
         };
-        _keepTracking = ((damage _vehicle) != 1);
     };
     sleep 300;
     deleteMarker _marker;
