@@ -41,7 +41,7 @@ if(!(isNull _object)) then {
         _comment = name _object;
     } else {
         _lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver",
-            objNull]);
+            ""]);
         if(_lastDriver != "") then {
             _playerArmaId = _lastDriver;
 

@@ -90,31 +90,35 @@ _vehicle addEventHandler["GetOut", {
 }];
 
 // change tickets when vehicle ist killed
-[_vehicle, {_this addEventHandler["Killed", {
-    _vehicle = _this select 0;
+_vehicle addMPEventHandler ["MPKilled", {
+    if(isServer) then {
+        _vehicle = _this select 0;
 
-    if(!isNull ((UAVControl _vehicle) select 0)) then {
-        _lastDriver = getPlayerUID ((UAVControl _vehicle) select 0);
+        if(!isNull ((UAVControl _vehicle) select 0)) then {
+            _lastDriver = getPlayerUID ((UAVControl _vehicle) select 0);
 
-        // in single player we use Willard's playerid
-        if(_lastDriver == "_SP_PLAYER_") then {
-            _lastDriver = "76561198022749433";
+            // in single player we use Willard's playerid
+            if(_lastDriver == "_SP_PLAYER_") then {
+                _lastDriver = "76561198022749433";
+            };
+
+            _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", 
+                _lastDriver, true];
         };
 
-        _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver, 
-            true];
-    };
+        _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", 
+            -1];
+        if(_handle != -1) then {
+            [_handle] call CBA_fnc_removePerFrameHandler;
+        };
 
-    _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
-    if(_handle != -1) then {
-        [_handle] call CBA_fnc_removePerFrameHandler;
+        if(!(_vehicle getVariable ["tf47_core_ticketsystem_despawn", false])) 
+            then {
+            [_vehicle, 1] remoteExecCall 
+                ["tf47_core_ticketsystem_fnc_changeTickets", 2];
+        };
     };
-
-    if(!(_vehicle getVariable ["tf47_core_ticketsystem_despawn", false])) then {
-        [_vehicle, 1] remoteExecCall 
-            ["tf47_core_ticketsystem_fnc_changeTickets", 2];
-    };
-}];}] remoteExecCall ["bis_fnc_call", _vehicle]; 
+}];
 
 // detect side via config
 _sideNumber = getNumber(configFile >> "CfgVehicles" >> typeOf _vehicle >> 
