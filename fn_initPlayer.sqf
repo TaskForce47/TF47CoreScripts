@@ -70,7 +70,7 @@ if(_slotCost == 0) then {
 // save the cost
 _player setVariable ["tf47_core_ticketsystem_cost", _slotCost, true];
 
-_player addMPEventHandler ["Killed", {
+_player addMPEventHandler ["MPKilled", {
     if(isServer) then {
         [_this select 0, 3] remoteExecCall 
             ["tf47_core_ticketsystem_fnc_changeTickets", 2];
