@@ -38,8 +38,12 @@ _trackingHandle = [_vehicle, _marker] spawn {
             sleep tf47_core_ticketsystem_trackingMarkerUpdate;
             _marker setMarkerPos
                 [(getPos _vehicle) select 0, (getPos _vehicle) select 1];
-            if((damage _vehicle) == 1 || (_vehicle getVariable
-                    ["tf47_core_ticketsystem_isDeserted", false])) then {
+            if((damage _vehicle) == 1 || 
+                missionNamespace getVariable 
+                [format ["tf47_core_ticketsystem_deserted_%1", 
+                (_vehicle call BIS_fnc_netId)], false]) then {
+            //(_vehicle getVariable
+              //      ["tf47_core_ticketsystem_isDeserted", false])) then {
                 _marker setMarkerAlpha 0.3;
             };
             _keepTracking = ((damage _vehicle) != 1);

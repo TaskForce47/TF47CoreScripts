@@ -40,8 +40,10 @@ if(!(isNull _object)) then {
         };
         _comment = name _object;
     } else {
-        _lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver",
-            ""]);
+        _lastDriver = missionNamespace getVariable [
+		    format["tf47_core_ticketsystem_lastDriver_%1", 
+		    _object call BIS_fnc_netId], ""];
+        //_lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver", ""]);
         if(_lastDriver != "") then {
             _playerArmaId = _lastDriver;
 

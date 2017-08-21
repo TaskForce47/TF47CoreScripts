@@ -27,7 +27,10 @@ if(!isServer) exitWith {
 
 // default change is no change
 if(_amount == 0) then {
-    _amount = _object getVariable ["tf47_core_ticketsystem_cost", 0];
+    _amount = missionNamespace getVariable 
+        [format ["tf47_core_ticketsystem_cost_%1", 
+        (_object call BIS_fnc_netId)], 0];
+    //_amount = _object getVariable ["tf47_core_ticketsystem_cost", 0];
 };
 
 _message = "";
@@ -39,7 +42,10 @@ if(!isNull _object) then {
     if(_object isKindOf "Man") then {
         _message = format["%1 ist gestorben!", name _object]
     } else {
-        if(_object getVariable ["tf47_core_ticketsystem_deserted", false]) then {
+        if(missionNamespace getVariable 
+            [format ["tf47_core_ticketsystem_deserted_%1", 
+            (_object call BIS_fnc_netId)], false]) then {
+        //if(_object getVariable ["tf47_core_ticketsystem_deserted", false]) then {
             _message = format["%1 wurde zurückgelassen!", getText (configFile >>
                 "CfgVehicles" >> (typeOf _object) >> "displayName")];
         } else {

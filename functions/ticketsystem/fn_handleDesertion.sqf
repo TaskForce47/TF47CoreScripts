@@ -22,7 +22,10 @@ if(isNull _vehicle) exitWith {
     ["handleDesertion called with null vehicle!", "Error", true] spawn
         BIS_fnc_guiMessage;
     diag_log "registerVehicle called with null vehicle!";
-	_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+	_handle = missionNamespace getVariable [
+		format["tf47_core_ticketsystem_timeoutHandle_%1", 
+		_vehicle call BIS_fnc_netId], -1];
+	//_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
 	if(_handle != -1) then {
 		[_handle] call CBA_fnc_removePerFrameHandler;
 	};
@@ -33,19 +36,31 @@ if(count (crew _vehicle) > 0 ||
 	(getMarkerPos tf47_core_ticketsystem_desertionMarker)) < 1000) exitWith {
 };
 
-_time = _vehicle getVariable ["tf47_core_ticketsystem_getoutTime", time];
+_time = missionNamespace getVariable [
+		format["tf47_core_ticketsystem_getoutTime_%1", 
+		_vehicle call BIS_fnc_netId], time];
+//_time = _vehicle getVariable ["tf47_core_ticketsystem_getoutTime", time];
 
 _time = time - _time;
 if(_time > tf47_core_ticketsystem_desertionTime) then {
-	_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+	_handle = missionNamespace getVariable [
+		format["tf47_core_ticketsystem_timeoutHandle_%1", 
+		_vehicle call BIS_fnc_netId], -1];
+	//_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
 	if(_handle != -1) then {
 		[_handle] call CBA_fnc_removePerFrameHandler;
 	};
 
-	_vehicle setVariable ["tf47_core_ticketsystem_deserted", true, true];
+	missionNamespace setVariable 
+        [format ["tf47_core_ticketsystem_deserted_%1", 
+        (_vehicle call BIS_fnc_netId)], true, true];
+	//_vehicle setVariable ["tf47_core_ticketsystem_deserted", true, true];
 	
 	[_vehicle, 2] call tf47_core_ticketsystem_fnc_changeTickets;
-	_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
+	missionNamespace setVariable 
+        [format ["tf47_core_ticketsystem_despawn_%1", 
+        (_vehicle call BIS_fnc_netId)], true, true];
+	//_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
 	_null = [_vehicle] spawn {
 		_vehicle = _this select 0;
 		_vehicle lock true;

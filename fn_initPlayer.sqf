@@ -68,7 +68,10 @@ if(_slotCost == 0) then {
 };
 
 // save the cost
-_player setVariable ["tf47_core_ticketsystem_cost", _slotCost, true];
+missionNamespace setVariable 
+        [format ["tf47_core_ticketsystem_cost_%1", 
+        (_player call BIS_fnc_netId)], _slotCost, true];
+//_player setVariable ["tf47_core_ticketsystem_cost", _slotCost, true];
 
 _player addMPEventHandler ["MPKilled", {
     if(isServer) then {

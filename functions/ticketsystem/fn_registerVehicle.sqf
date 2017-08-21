@@ -25,7 +25,10 @@ if(isNull _vehicle) exitWith {
 };
 
 // set the ticket cost
-_vehicle setVariable ["tf47_core_ticketsystem_cost", _cost, true];
+missionNamespace setVariable 
+        [format ["tf47_core_ticketsystem_cost_%1", 
+        (_vehicle call BIS_fnc_netId)], _cost, true];
+//_vehicle setVariable ["tf47_core_ticketsystem_cost", _cost, true];
 
 // track last "effective" commander
 _vehicle addEventHandler["GetIn", {
@@ -44,10 +47,14 @@ _vehicle addEventHandler["GetIn", {
             _lastDriver = "76561198022749433";
         };
     };
-    _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
-        true];
-    
-    _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+    missionNamespace setVariable 
+        [format ["tf47_core_ticketsystem_lastDriver_%1", 
+        (_vehicle call BIS_fnc_netId)], _lastDriver, true];
+    //_vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver, true];
+    _handle = missionNamespace getVariable [
+		format["tf47_core_ticketsystem_timeoutHandle_%1", 
+		_vehicle call BIS_fnc_netId], -1];
+    //_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
 	if(_handle != -1) then {
 		[_handle] call CBA_fnc_removePerFrameHandler;
 	};
@@ -68,14 +75,19 @@ _vehicle addEventHandler["SeatSwitched", {
             _lastDriver = "76561198022749433";
         };
     };
-    _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,
-        true];
+    missionNamespace setVariable 
+        [format ["tf47_core_ticketsystem_lastDriver_%1", 
+        (_vehicle call BIS_fnc_netId)], _lastDriver, true];
+    //_vehicle setVariable ["tf47_core_ticketsystem_lastDriver", _lastDriver,        true];
 }];
 
 _vehicle addEventHandler["GetOut", {
     _vehicle = _this select 0;
 
-    _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+    _handle = missionNamespace getVariable [
+		format["tf47_core_ticketsystem_timeoutHandle_%1", 
+		_vehicle call BIS_fnc_netId], -1];
+    //_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
     if(_handle != -1) then {
         [_handle] call CBA_fnc_removePerFrameHandler;
     };
@@ -84,8 +96,14 @@ _vehicle addEventHandler["GetOut", {
         _handle = [tf47_core_ticketsystem_fnc_handleDesertion, 
             	tf47_core_ticketsystem_desertionTime, _vehicle] 
                 call CBA_fnc_addPerFrameHandler;
-        _vehicle setVariable ["tf47_core_ticketsystem_timeoutHandle", _handle, true];
-        _vehicle setVariable ["tf47_core_ticketsystem_getoutTime", time, true];
+        missionNamespace setVariable
+            [format ["tf47_core_ticketsystem_timeoutHandle_%1", 
+            (_vehicle call BIS_fnc_netId)], _handle, true];
+        //_vehicle setVariable ["tf47_core_ticketsystem_timeoutHandle", _handle, true];
+        missionNamespace setVariable
+            [format ["tf47_core_ticketsystem_getoutTime_%1", 
+            (_vehicle call BIS_fnc_netId)], time, true];
+        //_vehicle setVariable ["tf47_core_ticketsystem_getoutTime", time, true];
     };
 }];
 
@@ -101,18 +119,25 @@ _vehicle addMPEventHandler ["MPKilled", {
             if(_lastDriver == "_SP_PLAYER_") then {
                 _lastDriver = "76561198022749433";
             };
-
-            _vehicle setVariable ["tf47_core_ticketsystem_lastDriver", 
-                _lastDriver, true];
+            
+            missionNamespace setVariable 
+                [format ["tf47_core_ticketsystem_lastDriver_%1", 
+                (_vehicle call BIS_fnc_netId)], _lastDriver, true];
+            //_vehicle setVariable ["tf47_core_ticketsystem_lastDriver",                 _lastDriver, true];
         };
 
-        _handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", 
-            -1];
+        _handle = missionNamespace getVariable [
+		    format["tf47_core_ticketsystem_timeoutHandle_%1", 
+		    _vehicle call BIS_fnc_netId], -1];
+        //_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
         if(_handle != -1) then {
             [_handle] call CBA_fnc_removePerFrameHandler;
         };
 
-        if(!(_vehicle getVariable ["tf47_core_ticketsystem_despawn", false])) 
+        if(!(missionNamespace getVariable 
+            [format ["tf47_core_ticketsystem_despawn_%1", 
+            (_vehicle call BIS_fnc_netId)], false]))
+        //if(!(_vehicle getVariable ["tf47_core_ticketsystem_despawn", false])) 
             then {
             [_vehicle, 1] remoteExecCall 
                 ["tf47_core_ticketsystem_fnc_changeTickets", 2];
