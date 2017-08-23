@@ -31,6 +31,8 @@ if(isNull _vehicle) exitWith {
 	};
 };
 
+if(!(alive _vehicle)) exitWith {};
+
 if(count (crew _vehicle) > 0 || 
 	((getPos _vehicle) distance 
 	(getMarkerPos tf47_core_ticketsystem_desertionMarker)) < 1000) exitWith {
