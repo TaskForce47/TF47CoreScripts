@@ -5,8 +5,8 @@
  *  the Database
  *  @params 
  *      param 0: Vehicle or Player <object>
- *      param 1: Ticket amount <number>
- *      param 2: Action id <number>
+ *      param 1: Action id <number>
+ *      param 2: Ticket amount <number>
  *      param 3: Is it a ticket gain <boolean>
  *      param 4: Custom notification text <string>
  *  @return nothing
@@ -31,6 +31,19 @@ if(_amount == 0) then {
         [format ["tf47_core_ticketsystem_cost_%1", 
         (_object call BIS_fnc_netId)], 0];
     //_amount = _object getVariable ["tf47_core_ticketsystem_cost", 0];
+    if(_amount == 0 && _object isKindOf "Man") then {
+        {
+        if((_x select 0) == (str _object)) then {
+            _slotCost = (_x select 1);
+        };
+        } foreach tf47_core_ticketsystem_slotCost;
+
+        // set default cost
+        if(_slotCost == 0) then {
+            _slotCost = tf47_core_ticketsystem_defaultTickets;
+        };
+        _amount = _slotCost;
+    };
 };
 
 _message = "";

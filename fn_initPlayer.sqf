@@ -80,4 +80,4 @@ missionNamespace setVariable
         [_killedPlayer, 3] remoteExecCall 
             ["tf47_core_ticketsystem_fnc_changeTickets", 2];
     }];
-}] remoteExecCall ["bis_fnc_call", _player]; 
+}] remoteExecCall ["bis_fnc_call", _player];

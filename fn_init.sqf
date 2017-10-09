@@ -17,3 +17,11 @@ addMissionEventHandler ["PlayerViewChanged", {
         	((_this select 5) call BIS_fnc_netId)], _playerArmaId, true];
 	};
 }];
+
+addMissionEventHandler ["HandleDisconnect", {
+	params ["_unit","_id","_uid","_name"];
+  	if(_unit getVariable ["ace_isunconscious", false]) then {
+    	[_unit, 3] remoteExecCall 
+			["tf47_core_ticketsystem_fnc_changeTickets", 2];
+  	};
+}];
