@@ -56,8 +56,12 @@ if (
     _className == "rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_wd" ||
     _className == "rhsusf_M978A4_BKIT_usarmy_d" ||
     _className == "rhsusf_M978A4_BKIT_usarmy_wd" ||
+    _className == "rhsusf_M977A4_AMMO_BKIT_M2_usarmy_d" ||
+    _className == "rhsusf_M977A4_AMMO_BKIT_M2_usarmy_wd" ||
     _className == "rhsusf_M977A4_AMMO_BKIT_usarmy_d" ||
-    _className == "rhsusf_M977A4_AMMO_BKIT_usarmy_wd"
+    _className == "rhsusf_M977A4_AMMO_BKIT_usarmy_wd" ||
+    _className == "rhsusf_M977A4_REPAIR_BKIT_usarmy_wd" ||
+    _className == "rhsusf_M977A4_REPAIR_BKIT_usarmy_d"
 ) exitWith {
     format["%1maint", _markerSide];
 };

@@ -35,7 +35,8 @@ _trackingHandle = [_vehicle, _marker] spawn {
     _keepTracking = true;
     while {_keepTracking} do {
         if(!isNull _vehicle) then {
-            sleep tf47_core_ticketsystem_trackingMarkerUpdate;
+            sleep 5;
+            //sleep tf47_core_ticketsystem_trackingMarkerUpdate;
             _marker setMarkerPos
                 [(getPos _vehicle) select 0, (getPos _vehicle) select 1];
             if((damage _vehicle) == 1 || 
