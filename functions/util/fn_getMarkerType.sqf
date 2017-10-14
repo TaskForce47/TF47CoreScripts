@@ -17,6 +17,8 @@ if(isNull _vehicle) exitWith {
         BIS_fnc_guiMessage;
 };
 
+_className = typeOf _vehicle;
+
 // determine side prefix
 _markerSide = switch (_side) do {
     case (west): {
@@ -34,7 +36,12 @@ _markerSide = switch (_side) do {
 _configPath = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
 
 // medical
-if(getNumber(_configPath >> "attendant") == 1) exitWith {
+if(getNumber(_configPath >> "attendant") == 1 ||
+    _className == "rhsusf_M1230a1_usarmy_d" ||
+    _className == "rhsusf_M1230a1_usarmy_wd" ||
+    _className == "rhsusf_M1085A1P2_B_D_Medical_fmtv_usarmy" ||
+    _className == "rhsusf_M1085A1P2_B_WD_Medical_fmtv_usarmy"
+) exitWith {
     format["%1med", _markerSide];
 };
 
@@ -44,7 +51,13 @@ if (
     getNumber (_configPath >>  "transportFuel") > 0 ||
     getNumber (_configPath >>  "transportAmmo") > 0 ||
     getNumber (_configPath >>  "ACE_canRepair") > 0 ||
-    getNumber (_configPath >>  "ACE_fuelCapacityCargo") > 0
+    getNumber (_configPath >>  "ACE_fuelCapacityCargo") > 0 ||
+    _className == "rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_d" ||
+    _className == "rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_wd" ||
+    _className == "rhsusf_M978A4_BKIT_usarmy_d" ||
+    _className == "rhsusf_M978A4_BKIT_usarmy_wd" ||
+    _className == "rhsusf_M977A4_AMMO_BKIT_usarmy_d" ||
+    _className == "rhsusf_M977A4_AMMO_BKIT_usarmy_wd"
 ) exitWith {
     format["%1maint", _markerSide];
 };
