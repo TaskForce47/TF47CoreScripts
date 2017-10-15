@@ -32,6 +32,21 @@ _markerSide = switch (_side) do {
     };
 };
 
+// Container
+if(_className == "B_Slingload_01_Medevac_F") then {
+    "b_med"
+};
+
+if(_className == "B_Slingload_01_Ammo_F" ||
+    _className == "B_Slingload_01_Repair_F" ||
+    _className == "B_Slingload_01_Fuel_F") then {
+    "b_maint"
+};
+
+if(_className == "B_Slingload_01_Cargo_F") then {
+    "b_support"
+};
+
 // determine the marker type
 _configPath = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
 
@@ -103,21 +118,6 @@ if (_vehicle isKindOf "Tank") exitWith {
 // ship
 if (_vehicle isKindOf "Ship") exitWith {
     format["%1naval", _markerSide];
-};
-
-// Container
-if(_className == "B_Slingload_01_Medevac_F") then {
-    "b_med"
-};
-
-if(_className == "B_Slingload_01_Ammo_F" ||
-    _className == "B_Slingload_01_Repair_F" ||
-    _className == "B_Slingload_01_Fuel_F") then {
-    "b_maint"
-};
-
-if(_className == "B_Slingload_01_Cargo_F") then {
-    "b_support"
 };
 
 // default is unkown
