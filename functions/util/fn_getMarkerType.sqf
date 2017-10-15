@@ -33,17 +33,17 @@ _markerSide = switch (_side) do {
 };
 
 // Container
-if(_className == "B_Slingload_01_Medevac_F") then {
+if(_className == "B_Slingload_01_Medevac_F") exitWith {
     "b_med"
 };
 
 if(_className == "B_Slingload_01_Ammo_F" ||
     _className == "B_Slingload_01_Repair_F" ||
-    _className == "B_Slingload_01_Fuel_F") then {
+    _className == "B_Slingload_01_Fuel_F") exitWith {
     "b_maint"
 };
 
-if(_className == "B_Slingload_01_Cargo_F") then {
+if(_className == "B_Slingload_01_Cargo_F") exitWith {
     "b_support"
 };
 
