@@ -40,5 +40,6 @@ class tf47_core_ticketsystem
         class trackVehicle {};
         class insertTicketlog {};
         class handleDesertion {};
+        class onPlayerRespawn {};
     };
 };
