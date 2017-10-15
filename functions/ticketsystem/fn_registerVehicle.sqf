@@ -155,5 +155,15 @@ _side = switch (_sideNumber) do {
     default { civilian };
 };
 
+// Side for Huron Container
+_className = (typeOf _vehicle);
+if(_className == "B_Slingload_01_Medevac_F" ||
+    _className == "B_Slingload_01_Ammo_F" ||
+    _className == "B_Slingload_01_Repair_F" ||
+    _className == "B_Slingload_01_Fuel_F" ||
+    _className == "B_Slingload_01_Cargo_F") then {
+    _side = west;
+};
+
 // start the vehicle tracking
 [_vehicle, _side] call tf47_core_ticketsystem_fnc_trackVehicle;
