@@ -31,11 +31,12 @@ if(_amount == 0) then {
         [format ["tf47_core_ticketsystem_cost_%1", 
         (_object call BIS_fnc_netId)], 0];
     //_amount = _object getVariable ["tf47_core_ticketsystem_cost", 0];
-    if(_amount == 0 && _object isKindOf "Man") then {
+    if(_amount == 0 && (_object isKindOf "Man")) then {
+        _slotCost = 0;
         {
-        if((_x select 0) == (str _object)) then {
-            _slotCost = (_x select 1);
-        };
+            if((_x select 0) == (str _object)) then {
+                _slotCost = (_x select 1);
+            };
         } foreach tf47_core_ticketsystem_slotCost;
 
         // set default cost
