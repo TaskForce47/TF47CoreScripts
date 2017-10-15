@@ -105,6 +105,21 @@ if (_vehicle isKindOf "Ship") exitWith {
     format["%1naval", _markerSide];
 };
 
+// Container
+if(_className == "B_Slingload_01_Medevac_F") then {
+    "b_med"
+};
+
+if(_className == "B_Slingload_01_Ammo_F" ||
+    _className == "B_Slingload_01_Repair_F" ||
+    _className == "B_Slingload_01_Fuel_F") then {
+    "b_maint"
+};
+
+if(_className == "B_Slingload_01_Cargo_F") then {
+    "b_support"
+};
+
 // default is unkown
 format["%1unknown", _markerSide];
 
