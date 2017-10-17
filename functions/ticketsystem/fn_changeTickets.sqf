@@ -87,7 +87,7 @@ if(_newTickets > tf47_core_ticketsystem_hardcap) then {
     _newTickets = tf47_core_ticketsystem_hardcap;
 };
 
-if(tf47_core_ticketsystem_tickets <= 0) exitWith {};
+//if(tf47_core_ticketsystem_tickets <= 0) exitWith {};
 
 // "commit" the changed tickets
 tf47_core_ticketsystem_tickets = floor _newTickets;
