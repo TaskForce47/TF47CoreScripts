@@ -87,7 +87,7 @@ if(_newTickets > tf47_core_ticketsystem_hardcap) then {
     _newTickets = tf47_core_ticketsystem_hardcap;
 };
 
-//if(tf47_core_ticketsystem_tickets <= 0) exitWith {};
+if(!isNull "tf47_core_ticketsystem_endingScript") exitWith {};
 
 // "commit" the changed tickets
 tf47_core_ticketsystem_tickets = floor _newTickets;
@@ -102,7 +102,7 @@ publicVariable "tf47_core_ticketsystem_tickets";
 
 // end mission when there're no tickets left
 if(tf47_core_ticketsystem_tickets <= 0) then {
-    _nul = [] spawn {
+    tf47_core_ticketsystem_endingScript = [] spawn {
         sleep 5;
         [12, 0, objNull, "Mission verloren"] 
             call tf47_core_ticketsystem_fnc_insertTicketlog;
@@ -110,4 +110,6 @@ if(tf47_core_ticketsystem_tickets <= 0) then {
         ["tf47_core_missionLost", false, true] remoteExecCall
             ["BIS_fnc_endMission"];
     };
+
+    publicVariable "tf47_core_ticketsystem_endingScript";
 };

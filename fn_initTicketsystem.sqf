@@ -31,6 +31,9 @@ if((typeName _result) == "ARRAY") then {
 tf47_core_ticketsystem_round = _lastRound + 1;
 publicVariable "tf47_core_ticketsystem_round";
 
+tf47_core_ticketsystem_endingScript = scriptNull;
+publicVariable "tf47_core_ticketsystem_endingScript";
+
 // show current tickets every 300s
 _scriptHandle = [] spawn {
     while {true} do {
