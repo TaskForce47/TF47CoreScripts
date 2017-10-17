@@ -106,7 +106,7 @@ if(tf47_core_ticketsystem_tickets <= 0) then {
         sleep 5;
         [12, 0, objNull, "Mission verloren"] 
             call tf47_core_ticketsystem_fnc_insertTicketlog;
-    
+        sleep 10;
         ["tf47_core_missionLost", false, true] remoteExecCall
             ["BIS_fnc_endMission"];
     };
