@@ -20,8 +20,12 @@ addMissionEventHandler ["PlayerViewChanged", {
 
 addMissionEventHandler ["HandleDisconnect", {
 	params ["_unit","_id","_uid","_name"];
+	_amount = missionNamespace getVariable 
+		[format ["tf47_core_ticketsystem_cost_%1", 
+        (_unit call BIS_fnc_netId)], 0];
+
   	if(_unit getVariable ["ace_isunconscious", false]) then {
-    	[_unit, 3] remoteExecCall 
+    	[[_name, _uid], 3, _amount] remoteExecCall 
 			["tf47_core_ticketsystem_fnc_changeTickets", 2];
   	};
 }];

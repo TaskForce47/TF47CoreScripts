@@ -11,41 +11,21 @@
 _result = _this params [
     ["_actionId", 0, [0]],
     ["_change", 0, [0]],
-    ["_object", objNull, [objNull]],
+    ["_object", objNull, [objNull, []]],
     ["_comment", "", [""]]
 ];
 
 _playerId = 0;
+if(typeName _object == "OBJECT") then {
+    // determine the playerid
+    if(!(isNull _object)) then {
+        if(_object isKindOf "Man") then {
+            _playerArmaId = getPlayerUID _object;
 
-// determine the playerid
-if(!(isNull _object)) then {
-    if(_object isKindOf "Man") then {
-        _playerArmaId = getPlayerUID _object;
-
-        // in single player we use Willard's playerid
-        if(_playerArmaId == "_SP_PLAYER_") then {
-            _playerArmaId = "76561198022749433";
-        };
-
-        // get the database player_id
-        _playerIdResult = "extDB3" callExtension
-            format["0:SQL:getPlayerIdByPlayerId:%1", _playerArmaId];
-
-        _result = (call compile _playerIdResult) select 1;
-
-        if((typeName _result) == "ARRAY") then {
-            if((count _result) != 0) then {
-                _playerId = (_result select 0) select 0;
+            // in single player we use Willard's playerid
+            if(_playerArmaId == "_SP_PLAYER_") then {
+                _playerArmaId = "76561198022749433";
             };
-        };
-        _comment = name _object;
-    } else {
-        _lastDriver = missionNamespace getVariable [
-		    format["tf47_core_ticketsystem_lastDriver_%1", 
-		    _object call BIS_fnc_netId], ""];
-        //_lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver", ""]);
-        if(_lastDriver != "") then {
-            _playerArmaId = _lastDriver;
 
             // get the database player_id
             _playerIdResult = "extDB3" callExtension
@@ -58,10 +38,49 @@ if(!(isNull _object)) then {
                     _playerId = (_result select 0) select 0;
                 };
             };
+            _comment = name _object;
+        } else {
+            _lastDriver = missionNamespace getVariable [
+                format["tf47_core_ticketsystem_lastDriver_%1", 
+                _object call BIS_fnc_netId], ""];
+            //_lastDriver = (_object getVariable ["tf47_core_ticketsystem_lastDriver", ""]);
+            if(_lastDriver != "") then {
+                _playerArmaId = _lastDriver;
+
+                // get the database player_id
+                _playerIdResult = "extDB3" callExtension
+                    format["0:SQL:getPlayerIdByPlayerId:%1", _playerArmaId];
+
+                _result = (call compile _playerIdResult) select 1;
+
+                if((typeName _result) == "ARRAY") then {
+                    if((count _result) != 0) then {
+                        _playerId = (_result select 0) select 0;
+                    };
+                };
+            };
+            _comment = getText(configfile >> "CfgVehicles" >> typeOf _object 
+                >> "displayName");
         };
-        _comment = getText(configfile >> "CfgVehicles" >> typeOf _object 
-            >> "displayName");
     };
+} else {
+    _playerArmaId = _object select 1;
+    if(_playerArmaId == "_SP_PLAYER_") then {
+        _playerArmaId = "76561198022749433";
+    };
+
+    // get the database player_id
+    _playerIdResult = "extDB3" callExtension
+        format["0:SQL:getPlayerIdByPlayerId:%1", _playerArmaId];
+
+    _result = (call compile _playerIdResult) select 1;
+
+    if((typeName _result) == "ARRAY") then {
+        if((count _result) != 0) then {
+            _playerId = (_result select 0) select 0;
+        };
+    };
+    _comment = _object select 0;
 };
 
 // default id is "NULL" (no relationship)

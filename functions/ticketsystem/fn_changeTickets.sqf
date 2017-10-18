@@ -12,7 +12,7 @@
  *  @return nothing
  */
 _result = _this params [
-    ["_object", objNull, [objNull]],
+    ["_object", objNull, [objNull, []]],
     ["_action", 0, [0]],
     ["_amount", 0, [0]],
     ["_positiveChange", false, [false]],
@@ -37,26 +37,29 @@ _message = "";
 _ticketMessage = "";
 _notificationClass = "";
 _lastDriver = objNull;
-// determine message type (player/object)
-if(!isNull _object) then {
-    if(_object isKindOf "Man") then {
-        _message = format["%1 ist gestorben!", name _object]
-    } else {
-        if(missionNamespace getVariable 
-            [format ["tf47_core_ticketsystem_deserted_%1", 
-            (_object call BIS_fnc_netId)], false]) then {
-        //if(_object getVariable ["tf47_core_ticketsystem_deserted", false]) then {
-            _message = format["%1 wurde zurückgelassen!", getText (configFile >>
-                "CfgVehicles" >> (typeOf _object) >> "displayName")];
+if(typeName _object == "OBJECT") then {
+    // determine message type (player/object)
+    if(!isNull _object) then {
+        if(_object isKindOf "Man") then {
+            _message = format["%1 ist gestorben!", name _object]
         } else {
-            _message = format["%1 wurde zerstört!", getText (configFile >>
-                "CfgVehicles" >> (typeOf _object) >> "displayName")];
+            if(missionNamespace getVariable 
+                [format ["tf47_core_ticketsystem_deserted_%1", 
+                (_object call BIS_fnc_netId)], false]) then {
+            //if(_object getVariable ["tf47_core_ticketsystem_deserted", false]) then {
+                _message = format["%1 wurde zurückgelassen!", getText (configFile >>
+                    "CfgVehicles" >> (typeOf _object) >> "displayName")];
+            } else {
+                _message = format["%1 wurde zerstört!", getText (configFile >>
+                    "CfgVehicles" >> (typeOf _object) >> "displayName")];
+            };
         };
+    } else {
+        _message = "";
     };
 } else {
-    _message = "";
+    _message = format["%1 ist gestorben!", _object select 0]
 };
-
 // determine positive or negative change
 if(_positiveChange) then {
     _ticketMessage = "<t color='#b2ff4c'>Ticket Gewinn: </t>";
@@ -87,7 +90,7 @@ if(_newTickets > tf47_core_ticketsystem_hardcap) then {
     _newTickets = tf47_core_ticketsystem_hardcap;
 };
 
-if(!isNull "tf47_core_ticketsystem_endingScript") exitWith {};
+if(!isNull tf47_core_ticketsystem_endingScript) exitWith {};
 
 // "commit" the changed tickets
 tf47_core_ticketsystem_tickets = floor _newTickets;
