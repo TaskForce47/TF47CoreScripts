@@ -64,3 +64,7 @@
 
 #define REGISTER_VEHICLE_TICKETCOST(VEHICLE, COST) [VEHICLE, COST] call\
     tf47_core_ticketsystem_fnc_registerVehicle;
+
+
+tf47_core_whitelist_uavWhitelist = [];
+publicVariable "tf47_core_whitelist_uavWhitelist";

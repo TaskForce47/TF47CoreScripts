@@ -27,6 +27,8 @@ class tf47_core_whitelist
         class registerWhitelist {};
         class checkWhitelist {};
         class checkSlotWhitelist {};
+        class registerUavWhitelist {};
+        class checkWhitelistUav {};
     };
 };
 
