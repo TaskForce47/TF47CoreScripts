@@ -74,7 +74,7 @@ if(_positiveChange) then {
 if(_customText == "") then {
     _message = format["%1 <br/> %2 %3", _message, _ticketMessage, _amount];
 } else {
-    _message = _customText;
+    _message = format["%1 <br/> %2 %3", _customText, _ticketMessage, _amount];
 };
 
 // check for soft/hardcap
